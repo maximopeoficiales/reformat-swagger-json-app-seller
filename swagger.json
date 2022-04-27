@@ -7985,21 +7985,7 @@
 					"Auth"
 				],
 				"security": [],
-				"parameters": [],
-				"x-amazon-apigateway-integration": {
-					"uri": "http://${stageVariables.BaseURL}/auth/user",
-					"responses": {
-					  "default": {
-						"statusCode": "200"
-					  }
-					},
-					"passthroughBehavior": "when_no_match",
-					"connectionType": "VPC_LINK",
-					"connectionId": "${stageVariables.VPCLink}",
-					"httpMethod": "GET",
-					"type": "http_proxy"
-				  }
-				
+				"parameters": []
 			}
 		},
 		"/auth/logout": {
@@ -8139,7 +8125,17 @@
 					"Orders"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/orders": {
@@ -8179,7 +8175,17 @@
 					"Orders"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/orders/{id}/update_order_status_stable/evidence": {
@@ -8199,7 +8205,17 @@
 					"Orders"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/orders/assign-orders": {

@@ -9,23 +9,27 @@ Object.keys(documentation.paths as any).forEach(path => {
     // obtengo los paths
     // get endpoint
     const endpoint = documentation.paths[`${path}`];
-    const keyTypeMethod = Object.keys(endpoint)[0];
 
-    const docXAmazon: XAmazonApigatewayIntegration = {
-        uri: "http://${stageVariables.BaseURL}" + path,
-        responses: {
-            default: {
-                statusCode: "200"
-            }
-        },
-        passthroughBehavior: "when_no_match",
-        connectionType: "VPC_LINK",
-        connectionId: "${stageVariables.VPCLink}",
-        httpMethod: keyTypeMethod.toUpperCase(),
-        type: "http_proxy"
-    }
-    delete endpoint[keyTypeMethod]["operationId"];
-    endpoint[keyTypeMethod]["x-amazon-apigateway-integration"] = docXAmazon;
+    Object.keys(endpoint).forEach(method => {
+
+        const docXAmazon: XAmazonApigatewayIntegration = {
+            uri: "http://${stageVariables.BaseURL}" + path,
+            responses: {
+                default: {
+                    statusCode: "200"
+                }
+            },
+            passthroughBehavior: "when_no_match",
+            connectionType: "VPC_LINK",
+            connectionId: "${stageVariables.VPCLink}",
+            httpMethod: method.toUpperCase(),
+            type: "http_proxy"
+        }
+        delete endpoint[method]["operationId"] 
+        // endpoint[method]["operationId"] = uuidv4();
+        endpoint[method]["x-amazon-apigateway-integration"] = docXAmazon;
+    })
+    // delete endpoint[keyTypeMethod]["operationId"]
 
     documentation.paths[`${path}`] = endpoint;
 });
