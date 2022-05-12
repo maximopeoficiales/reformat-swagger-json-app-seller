@@ -2,7 +2,7 @@ import { Swagger, XAmazonApigatewayIntegration } from "./model";
 import { default as swagger } from "./swagger.json";
 import fs from 'fs';
 
-const documentation = swagger as Swagger;
+const documentation = swagger as any;
 // const objectPath = documentation.paths;
 
 Object.keys(documentation.paths as any).forEach(path => {
@@ -25,7 +25,7 @@ Object.keys(documentation.paths as any).forEach(path => {
             httpMethod: method.toUpperCase(),
             type: "http_proxy"
         }
-        delete endpoint[method]["operationId"] 
+        delete endpoint[method]["operationId"]
         // endpoint[method]["operationId"] = uuidv4();
         endpoint[method]["x-amazon-apigateway-integration"] = docXAmazon;
     })
